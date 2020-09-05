@@ -33,6 +33,19 @@ namespace RealisticDataGeneration
                 Console.WriteLine(json);
                 await Task.Delay(1000);
             }
+
+            var userFaker2 = new Faker<User>()
+                .RuleFor(x => x.Id, Guid.NewGuid)
+                .RuleFor(x => x.Name, x => x.Person.FullName)
+                .RuleFor(x => x.Email, x => x.Person.Email)
+                .RuleFor(x => x.Phone, x => x.Person.Phone)
+                .RuleFor(x => x.Address, x => x.Address.StreetAddress())
+                .RuleFor(x => x.City, x => x.Address.City())
+                .RuleFor(x => x.PostCode, x => x.Address.ZipCode())
+                .RuleFor(x => x.Country, x => x.Address.Country()).Generate();
+            var json2 = JsonSerializer.Serialize(userFaker2);
+            Console.WriteLine(json2);
+
             Console.ReadLine();
         }
     }
